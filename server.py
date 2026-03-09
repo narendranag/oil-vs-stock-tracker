@@ -9,7 +9,7 @@ import urllib.parse
 import urllib.error
 from pathlib import Path
 
-PORT = 3456
+PORT = int(os.environ.get("PORT", 3456))
 STATIC_DIR = Path(__file__).parent
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -59,6 +59,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             super().log_message(format, *args)
 
 if __name__ == "__main__":
-    server = http.server.HTTPServer(("", PORT), Handler)
+    server = http.server.HTTPServer(("0.0.0.0", PORT), Handler)
     print(f"Dashboard running at http://localhost:{PORT}")
     server.serve_forever()
